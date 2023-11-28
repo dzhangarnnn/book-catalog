@@ -28,7 +28,9 @@ const BookInfoPage = () => {
     const currentBook =
         location.state.from.pathname === "/"
             ? booksList?.find((b) => b._id === bookId)
-            : bookmarksList?.find((b) => b._id === bookId);
+            : booksList?.find((b) => b._id === bookId)
+            ? booksList.find((b) => b._id === bookId)
+            : bookmarksList.find((b) => b._id === bookId);
 
     const authors = currentBook?.authors?.join(", ");
     const img = currentBook?.imageLinks?.thumbnail;
@@ -37,22 +39,29 @@ const BookInfoPage = () => {
     const description = currentBook?.description;
 
     const handleToggleBookmark = (id) => {
-        if (status) {
-            dispatch(
-                updateUser({
-                    ...user,
-                    bookmarks: [
-                        ...user.bookmarks.filter((b) => b.bookId !== id)
-                    ]
-                })
-            );
+        if (!isLoggedIn) {
+            navigate("/login/login", { state: { from: location } });
         } else {
-            dispatch(
-                updateUser({
-                    ...user,
-                    bookmarks: [...user.bookmarks, { bookId: id, read: false }]
-                })
-            );
+            if (status) {
+                dispatch(
+                    updateUser({
+                        ...user,
+                        bookmarks: [
+                            ...user.bookmarks.filter((b) => b.bookId !== id)
+                        ]
+                    })
+                );
+            } else {
+                dispatch(
+                    updateUser({
+                        ...user,
+                        bookmarks: [
+                            ...user.bookmarks,
+                            { bookId: id, read: false }
+                        ]
+                    })
+                );
+            }
         }
     };
 
@@ -66,12 +75,10 @@ const BookInfoPage = () => {
                 description={description}
             />
             <div className="bookmark-bookInfo">
-                {user && (
-                    <BookMark
-                        status={status}
-                        onClick={() => handleToggleBookmark(bookId)}
-                    />
-                )}
+                <BookMark
+                    status={status}
+                    onClick={() => handleToggleBookmark(bookId)}
+                />
             </div>
             <button
                 className="btn btn-secondary btn-back"

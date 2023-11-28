@@ -50,7 +50,7 @@ const BookmarksList = ({ user }) => {
             : [];
 
     const count = bookmarksList?.length;
-    console.log(bookmarksList);
+
     useEffect(() => {
         if (count % pageSize === 0) {
             setCurrentPage(count / pageSize) || setCurrentPage(1);
