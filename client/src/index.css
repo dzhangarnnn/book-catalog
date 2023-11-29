@@ -40,6 +40,9 @@
     position: absolute;
     top:  170px;
     left: 5px;
+    @media (max-width: 434px) {
+      margin-top: 10px;
+    }
  }
 
  .imgBookContainer {
