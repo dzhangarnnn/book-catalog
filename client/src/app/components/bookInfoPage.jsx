@@ -84,7 +84,7 @@ const BookInfoPage = () => {
             </div>
             <button
                 className="btn btn-secondary btn-back"
-                onClick={() => navigate(-1)}
+                onClick={() => navigate("/")}
             >
                 Назад
             </button>
