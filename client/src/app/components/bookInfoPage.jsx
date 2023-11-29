@@ -30,7 +30,7 @@ const BookInfoPage = () => {
             ? booksList?.find((b) => b._id === bookId)
             : booksList?.find((b) => b._id === bookId)
             ? booksList.find((b) => b._id === bookId)
-            : bookmarksList.find((b) => b._id === bookId);
+            : bookmarksList?.find((b) => b._id === bookId);
 
     const authors = currentBook?.authors?.join(", ");
     const img = currentBook?.imageLinks?.thumbnail;
@@ -40,7 +40,9 @@ const BookInfoPage = () => {
 
     const handleToggleBookmark = (id) => {
         if (!isLoggedIn) {
-            navigate("/login/login", { state: { from: location } });
+            navigate("/login/login", {
+                state: { from: location }
+            });
         } else {
             if (status) {
                 dispatch(

@@ -73,7 +73,11 @@ const LoginForm = () => {
         if (!isValid) return;
 
         const redirect = location.state?.from?.pathname || "/";
-        dispatch(login(data, () => navigate(redirect)));
+        dispatch(
+            login(data, () =>
+                navigate(redirect, { state: { from: { pathname: redirect } } })
+            )
+        );
     };
     return (
         <form onSubmit={handleSubmit}>
